@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iheart.advertiser.advapp.constants.IHeartConstants;
 import com.iheart.advertiser.advapp.dao.IheartAdvDao;
 import com.iheart.advertiser.advapp.model.Advertiser;
 
@@ -31,9 +32,13 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 		if (null == advertiser1) {
 		advertiser.setAdvName(advertiser.getAdvName().toUpperCase());
 		iheartAdvDao.addAdv(advertiser);
+		return IHeartConstants.SUCCESS;
+		}
+		else {
+			
+			return IHeartConstants.ERROR;
 		}
 		
-		return "success";
 	}
 
 	@Override
@@ -46,9 +51,9 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 	public String deleteAdvertiserById(int advertiserId) {
 		int count =iheartAdvDao.deleteAdvById(advertiserId);
 		if (count == 1) {
-			return "successs";
+			return IHeartConstants.SUCCESS;
 		}
-		return "error";
+		return IHeartConstants.ERROR;
 	}
 
 	@Override
@@ -63,14 +68,13 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 			advertiser.setAdvCreditLimit(advertiser.getAdvCreditLimit() == null?advertiserResp.getAdvCreditLimit():advertiser.getAdvCreditLimit());
 			advertiser.setLastModifiedDate(new Date(System.currentTimeMillis()));
 			
-			
 			int count = iheartAdvDao.updateAdvById(advertiser);
 
 			if (count == 1) {
-				return "successs";
+				return IHeartConstants.SUCCESS;
 			}
 		}
-		return "error";
+		return IHeartConstants.ERROR;
 	}
 
 	@Override

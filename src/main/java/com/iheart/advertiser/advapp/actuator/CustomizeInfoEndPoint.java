@@ -13,20 +13,20 @@ import org.springframework.stereotype.Component;
 @Component
 @EndpointWebExtension(endpoint = InfoEndpoint.class)
 public class CustomizeInfoEndPoint {
-	
+
 	@Autowired
 	private InfoEndpoint actuatorInfo;
-	
+
 	@ReadOperation
 	public WebEndpointResponse<Map> info() {
-		
+
 		Map<String, Object> info = this.actuatorInfo.info();
 		Map<String, Object> adviserInfo = new HashMap<String, Object>();
 		adviserInfo.put("Build", info.get("build"));
 		adviserInfo.put("Author", "Cijo Johny");
 		adviserInfo.put("About", "This application handles add, update, delete, get operations on Adviser data.");
 		return new WebEndpointResponse<>(adviserInfo, 200);
-		
+
 	}
 
 }

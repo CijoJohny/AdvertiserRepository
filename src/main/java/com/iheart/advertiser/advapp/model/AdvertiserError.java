@@ -7,6 +7,7 @@ public class AdvertiserError {
 	
 	private String code;
 	private String message;
+	
 
 }
 
