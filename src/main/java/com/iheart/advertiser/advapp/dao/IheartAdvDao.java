@@ -12,6 +12,13 @@ import com.iheart.advertiser.advapp.model.Advertiser;
 @Mapper
 public interface IheartAdvDao {
 	
+	@Results({
+		@Result(property = "advertiserId", column = "ADVERTISER_ID"),
+        @Result(property = "advName", column = "NAME"),
+        @Result(property = "advContactName", column = "CONTACT_NAME"),
+        @Result(property = "advCreditLimit", column = "CREDIT_LIMIT"),
+	})
+	
 	@Select("SELECT * FROM ADVERTISER WHERE NAME=#{name}")
 	Advertiser findAdvByName(String name);
 	
@@ -19,18 +26,15 @@ public interface IheartAdvDao {
 	@Select("SELECT * FROM ADVERTISER")
 	Advertiser findAllAdvertisers();
 	
+	@Results({
+		@Result(property = "advertiserId", column = "ADVERTISER_ID"),
+        @Result(property = "advName", column = "NAME"),
+        @Result(property = "advContactName", column = "CONTACT_NAME"),
+        @Result(property = "advCreditLimit", column = "CREDIT_LIMIT"),
+	})
 	@Select("SELECT * FROM ADVERTISER WHERE ADVERTISER_ID  =#{ADVERTISER_ID}")
 	Advertiser findAdvById(int ADVERTISER_ID);
 	
-	@Results({
-
-        @Result(property = "advName", column = "NAME"),
-
-        @Result(property = "advContactName", column = "CONTACT_NAME"),
-
-        @Result(property = "advCreditLimit", column = "CREDIT_LIMIT"),
-
-       })
 	
 	@Insert("INSERT INTO ADVERTISER(ADVERTISER_ID,NAME, CONTACT_NAME, CREDIT_LIMIT) VALUES(#{advertiserId},#{advName}, #{advContactName}, #{advCreditLimit})")
 	void addAdv(Advertiser advertiser);

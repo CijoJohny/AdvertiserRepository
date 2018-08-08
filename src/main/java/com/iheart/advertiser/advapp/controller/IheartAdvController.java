@@ -49,7 +49,7 @@ public class IheartAdvController {
 
 	 @GetMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 		@ResponseStatus(HttpStatus.OK)
-		public ResponseEntity<List<Advertiser>> getAllAdvertiser(@PathVariable int advertiserId) {
+		public ResponseEntity<List<Advertiser>> getAllAdvertiser() {
 			
 			List<Advertiser> resp = iheartAdvService.getAllAdvertiser();
 			return new ResponseEntity<List<Advertiser>>(resp, HttpStatus.CREATED);

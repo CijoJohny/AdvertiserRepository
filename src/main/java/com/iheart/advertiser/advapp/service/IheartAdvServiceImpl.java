@@ -33,6 +33,7 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 	@Override
 	public Advertiser getAdvertiserInfo(int advertiserId) {
 		Advertiser advertiser = iheartAdvDao.findAdvById(advertiserId);
+	//	Advertiser advertiser = iheartAdvDao.findAdvByName("cijoComplanyq");
 		return advertiser;
 	}
 
