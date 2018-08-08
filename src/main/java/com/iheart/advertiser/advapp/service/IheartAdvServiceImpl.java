@@ -1,5 +1,7 @@
 package com.iheart.advertiser.advapp.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,33 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 	public Advertiser getAdvertiserInfo(int advertiserId) {
 		Advertiser advertiser = iheartAdvDao.findAdvById(advertiserId);
 		return advertiser;
+	}
+
+	@Override
+	public String deleteAdvertiserById(int advertiserId) {
+		iheartAdvDao.deleteAdvById(advertiserId);
+		return null;
+	}
+
+	@Override
+	public String updateAdvertiserById(Advertiser advertiser) {
+		iheartAdvDao.updateAdvById(advertiser);
+		return null;
+	}
+
+	@Override
+	public Boolean doCreditCheck(int advertiserId, long creditBalance) {
+		Advertiser advertiser = iheartAdvDao.findAdvById(advertiserId);
+		if (null!= advertiser && null!=advertiser.getAdvCreditLimit() && advertiser.getAdvCreditLimit() > creditBalance) {
+			return true;
+		}
+		return null;
+	}
+
+	@Override
+	public List<Advertiser> getAllAdvertiser() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

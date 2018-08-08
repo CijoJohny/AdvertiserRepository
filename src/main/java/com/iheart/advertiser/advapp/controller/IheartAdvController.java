@@ -1,13 +1,17 @@
 package com.iheart.advertiser.advapp.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -43,6 +47,13 @@ public class IheartAdvController {
 		return new ResponseEntity<Advertiser>(resp, HttpStatus.CREATED);
 	}
 
+	 @GetMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+		@ResponseStatus(HttpStatus.OK)
+		public ResponseEntity<List<Advertiser>> getAllAdvertiser(@PathVariable int advertiserId) {
+			
+			List<Advertiser> resp = iheartAdvService.getAllAdvertiser();
+			return new ResponseEntity<List<Advertiser>>(resp, HttpStatus.CREATED);
+		}
 
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -55,5 +66,35 @@ public class IheartAdvController {
 		String resp = iheartAdvService.addAdvertiser(advertiser);
 		//Advertiser resp = repository.findAdvByName(advertiser.getAdvName());
 		return new ResponseEntity<String>(resp, HttpStatus.CREATED);
+	}
+	
+	@PutMapping(value = "/{advertiserId}",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<String> updateAdvertiser(@RequestBody(required=true) Advertiser advertiser) {
+		
+		String resp = iheartAdvService.updateAdvertiserById(advertiser);
+		//Advertiser resp = repository.findAdvByName(advertiser.getAdvName());
+		return new ResponseEntity<String>(resp, HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping(value = "/{advertiserId}",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<String> deleteAdvertiser(@PathVariable(required=true) int advertiserId) {
+		
+		String resp = iheartAdvService.deleteAdvertiserById(advertiserId);
+		//Advertiser resp = repository.findAdvByName(advertiser.getAdvName());
+		return new ResponseEntity<String>(resp, HttpStatus.CREATED);
+	}
+	
+	@GetMapping(value = "/{advertiserId}/creditCheck/{creditBalance}",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Boolean> doCreditCheck(@PathVariable(required=true) int advertiserId,long creditBalance) {
+		
+		// TODO Validate Request Object
+		// TODO Validate for Duplicate Data
+		
+		Boolean resp = iheartAdvService.doCreditCheck(advertiserId,creditBalance);
+		//Advertiser resp = repository.findAdvByName(advertiser.getAdvName());
+		return new ResponseEntity<Boolean>(resp, HttpStatus.CREATED);
 	}
 }
