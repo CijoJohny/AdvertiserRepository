@@ -20,4 +20,6 @@ public interface IheartAdvService {
 
 	public List<Advertiser> getAllAdvertiser();
 
+	public Boolean creditAmountFromAdvertiser(int advertiserId, long creditAmount);
+
 }

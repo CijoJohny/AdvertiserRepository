@@ -57,7 +57,6 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 		Advertiser advertiserResp = iheartAdvDao.findAdvById(advertiser.getAdvertiserId());
 		
 		if (null != advertiserResp) {
-			
 		
 			advertiser.setAdvContactName(advertiser.getAdvContactName() == null?advertiserResp.getAdvContactName():advertiser.getAdvContactName());
 			advertiser.setAdvName(advertiser.getAdvName() == null?advertiserResp.getAdvName():advertiser.getAdvName());
@@ -88,6 +87,18 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
+	@Override
+	public Boolean creditAmountFromAdvertiser(int advertiserId, long creditAmount) {
+		Advertiser advertiser = iheartAdvDao.findAdvById(advertiserId);
+		if (null!= advertiser && null!=advertiser.getAdvCreditLimit() && advertiser.getAdvCreditLimit() > creditAmount) {
+			Advertiser adv = new Advertiser();
+			adv.setAdvCreditLimit(advertiser.getAdvCreditLimit() - creditAmount);
+			adv.setAdvertiserId(advertiserId);
+			updateAdvertiserById(adv);
+			return true;
+		}
+		return false;
+	}
 }
+

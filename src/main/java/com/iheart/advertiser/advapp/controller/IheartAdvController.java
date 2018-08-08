@@ -39,12 +39,12 @@ public class IheartAdvController {
 	            @ApiResponse(code = 400,  message = "bad input params"),
 	            @ApiResponse(code = 404, message = "no details found")})
 	
-	@GetMapping(value = "/{advertiserId}",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/{advertiserId}", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Advertiser> getAdvertiser(@PathVariable int advertiserId) {
 		
 		Advertiser resp = iheartAdvService.getAdvertiserInfo(advertiserId);
-		return new ResponseEntity<Advertiser>(resp, HttpStatus.CREATED);
+		return new ResponseEntity<Advertiser>(resp, HttpStatus.OK);
 	}
 
 	 @GetMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -52,7 +52,7 @@ public class IheartAdvController {
 		public ResponseEntity<List<Advertiser>> getAllAdvertiser() {
 			
 			List<Advertiser> resp = iheartAdvService.getAllAdvertiser();
-			return new ResponseEntity<List<Advertiser>>(resp, HttpStatus.CREATED);
+			return new ResponseEntity<List<Advertiser>>(resp, HttpStatus.OK);
 		}
 
 	
@@ -73,7 +73,7 @@ public class IheartAdvController {
 		advertiser.setAdvertiserId(advertiserId);
 		
 		String resp = iheartAdvService.updateAdvertiserById(advertiser);
-		return new ResponseEntity<String>(resp, HttpStatus.CREATED);
+		return new ResponseEntity<String>(resp, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/{advertiserId}",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -81,19 +81,26 @@ public class IheartAdvController {
 	public ResponseEntity<String> deleteAdvertiser(@PathVariable(required=true) int advertiserId) {
 		
 		String resp = iheartAdvService.deleteAdvertiserById(advertiserId);
-		//Advertiser resp = repository.findAdvByName(advertiser.getAdvName());
-		return new ResponseEntity<String>(resp, HttpStatus.CREATED);
+		return new ResponseEntity<String>(resp, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{advertiserId}/creditCheck/{creditBalance}",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/{advertiserId}/{creditAmount}", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Boolean> doCreditCheck(@PathVariable(required=true) int advertiserId,@PathVariable(required=true) long creditBalance) {
+	public ResponseEntity<Boolean> doCreditCheck(@PathVariable(required=true) int advertiserId,@PathVariable(required=true) long creditAmount) {
 		
 		// TODO Validate Request Object
 		// TODO Validate for Duplicate Data
 		
-		Boolean resp = iheartAdvService.doCreditCheck(advertiserId,creditBalance);
-		//Advertiser resp = repository.findAdvByName(advertiser.getAdvName());
-		return new ResponseEntity<Boolean>(resp, HttpStatus.CREATED);
+		Boolean resp = iheartAdvService.doCreditCheck(advertiserId,creditAmount);
+		return new ResponseEntity<Boolean>(resp, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/{advertiserId}/{creditAmount}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Boolean> creditFromAccount(@PathVariable(required=true) int advertiserId,@PathVariable(required=true) long creditAmount) {
+		
+		Boolean resp = iheartAdvService.creditAmountFromAdvertiser(advertiserId,creditAmount);
+		
+		return new ResponseEntity<Boolean>(resp, HttpStatus.OK);
 	}
 }
