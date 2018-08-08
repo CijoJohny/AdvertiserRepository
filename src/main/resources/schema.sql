@@ -8,3 +8,9 @@ create table ADVERTISER
    LAST_MODIFIED_DATE date
 );
 
+CREATE SEQUENCE advertiser_seq
+ START WITH     1000
+ INCREMENT BY   1
+ NOCACHE
+ NOCYCLE;
+

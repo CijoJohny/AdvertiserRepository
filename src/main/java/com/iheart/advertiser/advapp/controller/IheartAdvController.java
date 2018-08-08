@@ -61,19 +61,18 @@ public class IheartAdvController {
 	public ResponseEntity<String> addAdvertiser(@RequestBody(required=true) Advertiser advertiser) {
 		
 		// TODO Validate Request Object
-		// TODO Validate for Duplicate Data
 		
 		String resp = iheartAdvService.addAdvertiser(advertiser);
-		//Advertiser resp = repository.findAdvByName(advertiser.getAdvName());
+	
 		return new ResponseEntity<String>(resp, HttpStatus.CREATED);
 	}
 	
 	@PutMapping(value = "/{advertiserId}",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<String> updateAdvertiser(@RequestBody(required=true) Advertiser advertiser) {
+	public ResponseEntity<String> updateAdvertiser(@PathVariable int advertiserId, @RequestBody(required=true) Advertiser advertiser) {
+		advertiser.setAdvertiserId(advertiserId);
 		
 		String resp = iheartAdvService.updateAdvertiserById(advertiser);
-		//Advertiser resp = repository.findAdvByName(advertiser.getAdvName());
 		return new ResponseEntity<String>(resp, HttpStatus.CREATED);
 	}
 	
@@ -88,7 +87,7 @@ public class IheartAdvController {
 	
 	@GetMapping(value = "/{advertiserId}/creditCheck/{creditBalance}",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Boolean> doCreditCheck(@PathVariable(required=true) int advertiserId,long creditBalance) {
+	public ResponseEntity<Boolean> doCreditCheck(@PathVariable(required=true) int advertiserId,@PathVariable(required=true) long creditBalance) {
 		
 		// TODO Validate Request Object
 		// TODO Validate for Duplicate Data

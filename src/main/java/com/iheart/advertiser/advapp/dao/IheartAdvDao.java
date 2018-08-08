@@ -36,14 +36,14 @@ public interface IheartAdvDao {
 	Advertiser findAdvById(int ADVERTISER_ID);
 	
 	
-	@Insert("INSERT INTO ADVERTISER(ADVERTISER_ID,NAME, CONTACT_NAME, CREDIT_LIMIT) VALUES(#{advertiserId},#{advName}, #{advContactName}, #{advCreditLimit})")
+	@Insert("INSERT INTO ADVERTISER(ADVERTISER_ID,NAME, CONTACT_NAME, CREDIT_LIMIT) VALUES(advertiser_seq.NEXTVAL,#{advName}, #{advContactName}, #{advCreditLimit})")
 	void addAdv(Advertiser advertiser);
 	
 	@Delete("DELETE FROM ADVERTISER WHERE ADVERTISER_ID =#{advertiserId}")
-	void deleteAdvById(int ADVERTISER_ID);
+	int deleteAdvById(int ADVERTISER_ID);
 	
 	
-	@Update("Update ADVERTISER set name=#{name}, CONTACT_NAME=#{advContactName},CREDIT_LIMIT= #{advCreditLimit} where ADVERTISER_ID=#{advertiserId}")
+	@Update("Update ADVERTISER set name=#{advName}, CONTACT_NAME=#{advContactName},CREDIT_LIMIT= #{advCreditLimit},LAST_MODIFIED_DATE=#{lastModifiedDate} where ADVERTISER_ID=#{advertiserId}")
 	public int updateAdvById(Advertiser advertiser);
 	
 

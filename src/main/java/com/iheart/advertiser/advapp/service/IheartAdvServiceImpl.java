@@ -1,5 +1,6 @@
 package com.iheart.advertiser.advapp.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,12 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 	@Override
 	public String addAdvertiser(Advertiser advertiser) {
 		
+		Advertiser advertiser1 = iheartAdvDao.findAdvByName(advertiser.getAdvName().toUpperCase());
+		
+		if (null == advertiser1) {
+		advertiser.setAdvName(advertiser.getAdvName().toUpperCase());
 		iheartAdvDao.addAdv(advertiser);
+		}
 		
 		return "success";
 	}
@@ -33,20 +39,39 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 	@Override
 	public Advertiser getAdvertiserInfo(int advertiserId) {
 		Advertiser advertiser = iheartAdvDao.findAdvById(advertiserId);
-	//	Advertiser advertiser = iheartAdvDao.findAdvByName("cijoComplanyq");
 		return advertiser;
 	}
 
 	@Override
 	public String deleteAdvertiserById(int advertiserId) {
-		iheartAdvDao.deleteAdvById(advertiserId);
-		return null;
+		int count =iheartAdvDao.deleteAdvById(advertiserId);
+		if (count == 1) {
+			return "successs";
+		}
+		return "error";
 	}
 
 	@Override
 	public String updateAdvertiserById(Advertiser advertiser) {
-		iheartAdvDao.updateAdvById(advertiser);
-		return null;
+		
+		Advertiser advertiserResp = iheartAdvDao.findAdvById(advertiser.getAdvertiserId());
+		
+		if (null != advertiserResp) {
+			
+		
+			advertiser.setAdvContactName(advertiser.getAdvContactName() == null?advertiserResp.getAdvContactName():advertiser.getAdvContactName());
+			advertiser.setAdvName(advertiser.getAdvName() == null?advertiserResp.getAdvName():advertiser.getAdvName());
+			advertiser.setAdvCreditLimit(advertiser.getAdvCreditLimit() == null?advertiserResp.getAdvCreditLimit():advertiser.getAdvCreditLimit());
+			advertiser.setLastModifiedDate(new Date(System.currentTimeMillis()));
+			
+			
+			int count = iheartAdvDao.updateAdvById(advertiser);
+
+			if (count == 1) {
+				return "successs";
+			}
+		}
+		return "error";
 	}
 
 	@Override
@@ -55,7 +80,7 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 		if (null!= advertiser && null!=advertiser.getAdvCreditLimit() && advertiser.getAdvCreditLimit() > creditBalance) {
 			return true;
 		}
-		return null;
+		return false;
 	}
 
 	@Override
