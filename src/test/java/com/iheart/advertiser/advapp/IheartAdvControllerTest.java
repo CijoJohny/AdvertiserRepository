@@ -61,6 +61,7 @@ public class IheartAdvControllerTest {
 		MvcResult mvcResult = mockMvc.perform(
 				post("/api/advertiser").contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(request)))
 				.andExpect(status().isCreated()).andReturn();
+		
 
 	}
 
@@ -87,8 +88,7 @@ public class IheartAdvControllerTest {
 		request.setAdvContactName("Cijo Johny");
 		request.setAdvCreditLimit(100L);
 		request.setAdvertiserId(11);
-
-		// doNothing().when(iheartAdvService).addAdvertiser(ArgumentMatchers.any(Advertiser.class));
+		
 		when(iheartAdvService.getAdvertiserInfo(ArgumentMatchers.any(Integer.class))).thenReturn(request);
 
 		MvcResult mvcResult = mockMvc.perform(
@@ -242,8 +242,7 @@ public class IheartAdvControllerTest {
 		MvcResult mvcResult = mockMvc.perform(get("/api/advertiser/1000/2000")
 				.contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(request)))
 				.andExpect(status().isOk()).andReturn();
-		System.out.println(mvcResult);
-
+		
 	}
 
 	@Test
@@ -261,7 +260,7 @@ public class IheartAdvControllerTest {
 		MvcResult mvcResult = mockMvc.perform(get("/api/advertiser/1000/2000")
 				.contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(request)))
 				.andExpect(status().isOk()).andReturn();
-		System.out.println(mvcResult);
+		
 
 	}
 
@@ -280,7 +279,7 @@ public class IheartAdvControllerTest {
 		MvcResult mvcResult = mockMvc.perform(post("/api/advertiser/1000/2000")
 				.contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(request)))
 				.andExpect(status().isOk()).andReturn();
-		System.out.println(mvcResult);
+		
 
 	}
 
@@ -299,8 +298,7 @@ public class IheartAdvControllerTest {
 		MvcResult mvcResult = mockMvc.perform(post("/api/advertiser/1000/2000")
 				.contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(request)))
 				.andExpect(status().isOk()).andReturn();
-		System.out.println(mvcResult);
-
+		
 	}
 
 	private static String asJsonString(final Object obj) {
