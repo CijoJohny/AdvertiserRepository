@@ -27,7 +27,7 @@
 #java -jar target/XXXXXX.jar
 #Make sure maven & Java is there PATH of your system to do above operation							
 #
-#
+#getAlladvetisers is a functionality which we can build for CSR/business to pull up the reports, But haven't implemented.
 #			
 #         For implementing the features we have used 
 #				Spring boot 2.0.4
