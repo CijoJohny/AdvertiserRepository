@@ -7,13 +7,14 @@ import lombok.Data;
 
 @Data
 public class Advertiser {
-	@ApiModelProperty(example ="10000", required = true, value = "advertiser Id", dataType = "Number")
+	@ApiModelProperty(example = "10000", required = true, value = "advertiser Id", dataType = "Number")
 	private int advertiserId;
-	 @ApiModelProperty(required = true, value = "IHEART MEDIA", dataType = "String",example ="IHEART MEDIA")
+	@ApiModelProperty(required = true, value = "IHEART MEDIA", dataType = "String", example = "IHEART MEDIA")
 	private String advName;
-	 @ApiModelProperty(required = true, value = "Cijo Johny", dataType = "String",example ="Cijo Johny")
+	@ApiModelProperty(required = true, value = "Cijo Johny", dataType = "String", example = "Cijo Johny")
 	private String advContactName;
 	private Long advCreditLimit;
 	private Date lastModifiedDate;
+	private Date createdDate;
 
 }

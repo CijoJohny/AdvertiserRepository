@@ -117,7 +117,6 @@ public class IheartAdvController {
 	public @ResponseStatus(HttpStatus.CREATED) @ResponseBody DeferredResult<ResponseEntity<String>> addAdvertiser(
 			@RequestBody(required = true) Advertiser advertiser) {
 		DeferredResult<ResponseEntity<String>> result = new DeferredResult<>(iHeartApiTimeout);
-		// TODO Validate Request Object
 
 		String resp = iheartAdvService.addAdvertiser(advertiser);
 		if (resp.equals(IHeartConstants.SUCCESS)) {

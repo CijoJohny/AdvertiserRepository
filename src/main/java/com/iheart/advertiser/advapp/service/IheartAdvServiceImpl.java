@@ -12,33 +12,32 @@ import com.iheart.advertiser.advapp.model.Advertiser;
 
 @Service
 public class IheartAdvServiceImpl implements IheartAdvService {
-	
-	
+
 	@Autowired
 	private IheartAdvDao iheartAdvDao;
-	
+
 	public Advertiser getAdvertiserInfo(String name) {
-		
+
 		Advertiser advertiser = iheartAdvDao.findAdvByName(name);
-		
-	  return advertiser;
+
+		return advertiser;
 	}
 
 	@Override
 	public String addAdvertiser(Advertiser advertiser) {
-		
+
 		Advertiser advertiser1 = iheartAdvDao.findAdvByName(advertiser.getAdvName().toUpperCase());
-		
+
 		if (null == advertiser1) {
-		advertiser.setAdvName(advertiser.getAdvName().toUpperCase());
-		iheartAdvDao.addAdv(advertiser);
-		return IHeartConstants.SUCCESS;
-		}
-		else {
-			
+			advertiser.setAdvName(advertiser.getAdvName().toUpperCase());
+			advertiser.setLastModifiedDate(new Date(System.currentTimeMillis()));
+			iheartAdvDao.addAdv(advertiser);
+			return IHeartConstants.SUCCESS;
+		} else {
+
 			return IHeartConstants.ERROR;
 		}
-		
+
 	}
 
 	@Override
@@ -49,7 +48,7 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 
 	@Override
 	public String deleteAdvertiserById(int advertiserId) {
-		int count =iheartAdvDao.deleteAdvById(advertiserId);
+		int count = iheartAdvDao.deleteAdvById(advertiserId);
 		if (count == 1) {
 			return IHeartConstants.SUCCESS;
 		}
@@ -58,16 +57,19 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 
 	@Override
 	public String updateAdvertiserById(Advertiser advertiser) {
-		
+
 		Advertiser advertiserResp = iheartAdvDao.findAdvById(advertiser.getAdvertiserId());
-		
+
 		if (null != advertiserResp) {
-		
-			advertiser.setAdvContactName(advertiser.getAdvContactName() == null?advertiserResp.getAdvContactName():advertiser.getAdvContactName());
-			advertiser.setAdvName(advertiser.getAdvName() == null?advertiserResp.getAdvName():advertiser.getAdvName());
-			advertiser.setAdvCreditLimit(advertiser.getAdvCreditLimit() == null?advertiserResp.getAdvCreditLimit():advertiser.getAdvCreditLimit());
+
+			advertiser.setAdvContactName(advertiser.getAdvContactName() == null ? advertiserResp.getAdvContactName()
+					: advertiser.getAdvContactName());
+			advertiser.setAdvName(
+					advertiser.getAdvName() == null ? advertiserResp.getAdvName() : advertiser.getAdvName());
+			advertiser.setAdvCreditLimit(advertiser.getAdvCreditLimit() == null ? advertiserResp.getAdvCreditLimit()
+					: advertiser.getAdvCreditLimit());
 			advertiser.setLastModifiedDate(new Date(System.currentTimeMillis()));
-			
+
 			int count = iheartAdvDao.updateAdvById(advertiser);
 
 			if (count == 1) {
@@ -80,7 +82,8 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 	@Override
 	public Boolean doCreditCheck(int advertiserId, long creditBalance) {
 		Advertiser advertiser = iheartAdvDao.findAdvById(advertiserId);
-		if (null!= advertiser && null!=advertiser.getAdvCreditLimit() && advertiser.getAdvCreditLimit() > creditBalance) {
+		if (null != advertiser && null != advertiser.getAdvCreditLimit()
+				&& advertiser.getAdvCreditLimit() >= creditBalance) {
 			return true;
 		}
 		return false;
@@ -95,7 +98,8 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 	@Override
 	public Boolean creditAmountFromAdvertiser(int advertiserId, long creditAmount) {
 		Advertiser advertiser = iheartAdvDao.findAdvById(advertiserId);
-		if (null!= advertiser && null!=advertiser.getAdvCreditLimit() && advertiser.getAdvCreditLimit() > creditAmount) {
+		if (null != advertiser && null != advertiser.getAdvCreditLimit()
+				&& advertiser.getAdvCreditLimit() >= creditAmount) {
 			Advertiser adv = new Advertiser();
 			adv.setAdvCreditLimit(advertiser.getAdvCreditLimit() - creditAmount);
 			adv.setAdvertiserId(advertiserId);
@@ -105,4 +109,3 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 		return false;
 	}
 }
-

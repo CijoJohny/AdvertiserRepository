@@ -4,10 +4,7 @@ import lombok.Data;
 
 @Data
 public class AdvertiserError {
-	
 	private String code;
 	private String message;
-	
 
 }
-
