@@ -13,6 +13,9 @@ public class Advertiser {
 	private String advName;
 	@ApiModelProperty(required = true, value = "Cijo Johny", dataType = "String", example = "Cijo Johny")
 	private String advContactName;
+	@ApiModelProperty(required = false, value = "ACTIVE", dataType = "String", example = "ACTIVE")
+	private String status;
+	
 	private Long advCreditLimit;
 	private Date lastModifiedDate;
 	private Date createdDate;

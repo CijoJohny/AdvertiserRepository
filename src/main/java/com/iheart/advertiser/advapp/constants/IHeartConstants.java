@@ -15,5 +15,6 @@ public class IHeartConstants {
 	public static final String ERROR = "error";
 	public static final String INTERNAL_SERVER_ERROR = "Internal Server Error";
 	public static final String INTERNAL_SERVER_ERROR_MESSAGE = "Please try again later/Check Request";
+	public static final String ACTIVE = "Active";
 	
 }

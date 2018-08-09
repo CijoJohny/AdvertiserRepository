@@ -1,6 +1,5 @@
 package com.iheart.advertiser.advapp;
 
-
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -13,17 +12,16 @@ import com.iheart.advertiser.advapp.validation.AdvertiserExceptionHandler;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdvertiserExceptionHandlerTest {
-	
-	
+
 	@InjectMocks
- 	private AdvertiserExceptionHandler advertiserExceptionHandler;
-	
+	private AdvertiserExceptionHandler advertiserExceptionHandler;
+
 	@Test
 	public void testHandleException() {
-		AdvertiserError advertiserError	= advertiserExceptionHandler.handleException(new Exception("jUnitTestError"));
-		
-		assertEquals("INTERNAL_SERVER_ERROR", advertiserError.getCode());
-		
+		AdvertiserError advertiserError = advertiserExceptionHandler.handleException(new Exception("jUnitTestError"));
+
+		assertEquals("Internal Server Error", advertiserError.getCode());
+
 	}
 
 }

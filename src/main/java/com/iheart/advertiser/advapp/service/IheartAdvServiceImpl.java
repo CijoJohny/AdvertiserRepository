@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iheart.advertiser.advapp.constants.IHeartAdvertiserStatus;
 import com.iheart.advertiser.advapp.constants.IHeartConstants;
 import com.iheart.advertiser.advapp.dao.IheartAdvDao;
 import com.iheart.advertiser.advapp.model.Advertiser;
@@ -69,11 +70,14 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 			advertiser.setAdvCreditLimit(advertiser.getAdvCreditLimit() == null ? advertiserResp.getAdvCreditLimit()
 					: advertiser.getAdvCreditLimit());
 			advertiser.setLastModifiedDate(new Date(System.currentTimeMillis()));
+			advertiser.setStatus(advertiser.getStatus() == null ?advertiserResp.getStatus()
+					: advertiser.getStatus());
+			if (IHeartAdvertiserStatus.isValidSatus(advertiser.getStatus())) {
+				int count = iheartAdvDao.updateAdvById(advertiser);
 
-			int count = iheartAdvDao.updateAdvById(advertiser);
-
-			if (count == 1) {
-				return IHeartConstants.SUCCESS;
+				if (count == 1) {
+					return IHeartConstants.SUCCESS;
+				}
 			}
 		}
 		return IHeartConstants.ERROR;

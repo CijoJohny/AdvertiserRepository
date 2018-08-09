@@ -36,13 +36,13 @@ public interface IheartAdvDao {
 	@Select("SELECT * FROM ADVERTISER WHERE ADVERTISER_ID  =#{ADVERTISER_ID}")
 	Advertiser findAdvById(int ADVERTISER_ID);
 
-	@Insert("INSERT INTO ADVERTISER(ADVERTISER_ID,NAME, CONTACT_NAME, CREDIT_LIMIT,LAST_MODIFIED_DATE) VALUES(advertiser_seq.NEXTVAL,#{advName}, #{advContactName}, #{advCreditLimit},#{lastModifiedDate})")
+	@Insert("INSERT INTO ADVERTISER(ADVERTISER_ID,NAME, CONTACT_NAME,STATUS, CREDIT_LIMIT,LAST_MODIFIED_DATE) VALUES(ADVERTISER_SEQ.NEXTVAL,#{advName}, #{advContactName}, #{status},#{advCreditLimit},#{lastModifiedDate})")
 	void addAdv(Advertiser advertiser);
 
 	@Delete("DELETE FROM ADVERTISER WHERE ADVERTISER_ID =#{advertiserId}")
 	int deleteAdvById(int ADVERTISER_ID);
 
-	@Update("Update ADVERTISER set name=#{advName}, CONTACT_NAME=#{advContactName},CREDIT_LIMIT= #{advCreditLimit},LAST_MODIFIED_DATE=#{lastModifiedDate} where ADVERTISER_ID=#{advertiserId}")
+	@Update("Update ADVERTISER set name=#{advName}, CONTACT_NAME=#{advContactName},CREDIT_LIMIT= #{advCreditLimit},LAST_MODIFIED_DATE=#{lastModifiedDate},STATUS =#{status} where ADVERTISER_ID=#{advertiserId}")
 	public int updateAdvById(Advertiser advertiser);
 
 }
