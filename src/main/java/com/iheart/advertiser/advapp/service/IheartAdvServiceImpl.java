@@ -25,19 +25,19 @@ public class IheartAdvServiceImpl implements IheartAdvService {
 	}
 
 	@Override
-	public String addAdvertiser(Advertiser advertiser) {
-
+	public Advertiser addAdvertiser(Advertiser advertiser) {
+		Advertiser adv = null;
 		Advertiser advertiser1 = iheartAdvDao.findAdvByName(advertiser.getAdvName().toUpperCase());
 
 		if (null == advertiser1) {
 			advertiser.setAdvName(advertiser.getAdvName().toUpperCase());
 			advertiser.setLastModifiedDate(new Date(System.currentTimeMillis()));
 			iheartAdvDao.addAdv(advertiser);
-			return IHeartConstants.SUCCESS;
-		} else {
-
-			return IHeartConstants.ERROR;
-		}
+			 adv = iheartAdvDao.findAdvByName(advertiser.getAdvName().toUpperCase());
+			
+		} 
+		
+		return adv;
 
 	}
 

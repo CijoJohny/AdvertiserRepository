@@ -56,7 +56,7 @@ public class IheartAdvControllerTest {
 		request.setAdvCreditLimit(100L);
 		request.setAdvertiserId(11);
 
-		when(iheartAdvService.addAdvertiser(ArgumentMatchers.any(Advertiser.class))).thenReturn("success");
+		when(iheartAdvService.addAdvertiser(ArgumentMatchers.any(Advertiser.class))).thenReturn(request);
 
 		MvcResult mvcResult = mockMvc.perform(
 				post("/api/advertiser").contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(request)))
@@ -67,16 +67,17 @@ public class IheartAdvControllerTest {
 
 	@Test
 	public void testAddAdvertiserError() throws Exception {
-		Advertiser request = new Advertiser();
-		request.setAdvName("Cijo");
-		request.setAdvContactName("Cijo Johny");
-		request.setAdvCreditLimit(100L);
-		request.setAdvertiserId(11);
+		Advertiser requestError = new Advertiser();
+		requestError.setAdvName("TestErrorReq");
+		requestError.setAdvContactName("Cijo Johny");
+		requestError.setAdvCreditLimit(100L);
+		requestError.setAdvertiserId(11);
+		requestError.setStatus("ACTIVE");
 
-		when(iheartAdvService.addAdvertiser(ArgumentMatchers.any(Advertiser.class))).thenReturn("error");
+		when(iheartAdvService.addAdvertiser(ArgumentMatchers.any(Advertiser.class))).thenReturn(null);
 
 		MvcResult mvcResult = mockMvc.perform(
-				post("/api/advertiser").contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(request)))
+				post("/api/advertiser").contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(requestError)))
 				.andExpect(status().isCreated()).andReturn();
 
 	}

@@ -110,17 +110,17 @@ public class IheartAdvController {
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "addAdvertiser", notes = "Used to add the advertiser to the system")
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "advertiser details response"),
+	@ApiResponses(value = { @ApiResponse(code = 201,response = Advertiser.class, message = "advertiser details response"),
 			@ApiResponse(code = 400, response = AdvertiserError.class, message = "bad input params"),
 			@ApiResponse(code = 404, response = AdvertiserError.class, message = "no details found") })
 
-	public @ResponseStatus(HttpStatus.CREATED) @ResponseBody DeferredResult<ResponseEntity<String>> addAdvertiser(
+	public @ResponseStatus(HttpStatus.CREATED) @ResponseBody DeferredResult<ResponseEntity<Advertiser>> addAdvertiser(
 			@RequestBody(required = true) Advertiser advertiser) {
-		DeferredResult<ResponseEntity<String>> result = new DeferredResult<>(iHeartApiTimeout);
+		DeferredResult<ResponseEntity<Advertiser>> result = new DeferredResult<>(iHeartApiTimeout);
 
-		String resp = iheartAdvService.addAdvertiser(advertiser);
-		if (resp.equals(IHeartConstants.SUCCESS)) {
-			result.setResult(new ResponseEntity<>(HttpStatus.CREATED));
+		Advertiser resp = iheartAdvService.addAdvertiser(advertiser);
+		if (null!= resp) {
+			result.setResult(new ResponseEntity<>(resp,HttpStatus.CREATED));
 		} else {
 			handleError(IHeartConstants.DUPLICATE_STATUS_CODE, IHeartConstants.DUPLICATE_STATUS_MESSAGE,
 					HttpStatus.BAD_REQUEST, result);

@@ -10,7 +10,7 @@ public interface IheartAdvService {
 
 	public Advertiser getAdvertiserInfo(int advertiserId);
 
-	public String addAdvertiser(Advertiser advertiser);
+	public Advertiser addAdvertiser(Advertiser advertiser);
 
 	public String deleteAdvertiserById(int advertiserId);
 
